@@ -1,0 +1,29 @@
+# Ignorar carpetas de dependencias
+**/node_modules/
+/backend/node_modules/  # Ignorar node_modules dentro de la carpeta backend
+/frontend/.angular/cache/
+# Ignorar archivos de compilación de Angular
+/frontend/dist/
+/frontend/build/
+
+# Ignorar archivos de depuración y logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignorar archivos de configuración local (si usas variables de entorno)
+.env
+
+# Ignorar archivos específicos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de editores de código (si no quieres compartirlos)
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Archivos específicos de Node.js/backend que quizás quieras ignorar
+/backend/dist/ # Si compilas TypeScript en el backend
+/backend/build/
