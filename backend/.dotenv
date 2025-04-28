@@ -1,0 +1,5 @@
+DB_USER=postgress
+DB_HOST=localhost
+DB_NAME=viamatica_cine_db
+DB_PASSWORD=pompispopo123
+DB_PORT=5432
