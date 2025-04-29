@@ -1,5 +1,13 @@
 // frontend/src/app/features/movies/components/movie-list/movie-list.component.ts
-import { Component, OnInit, inject, signal, WritableSignal, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal,
+  WritableSignal,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { MovieService } from '../../../services/movie.service';
 import { Pelicula } from '../../../models/movies';
 import { CommonModule } from '@angular/common';
@@ -24,7 +32,7 @@ export class MovieListComponent implements OnInit {
   @Output() editMovieEvent = new EventEmitter<number>();
   @Output() deleteMovieEvent = new EventEmitter<number>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.loadMovies();
@@ -35,16 +43,18 @@ export class MovieListComponent implements OnInit {
     this.error.set(null);
 
     if (this.publicationDateTerm()) {
-        this.movieService.searchPeliculasByPublicationDate(this.publicationDateTerm()).subscribe({
-            next: (data) => {
-                this.movies.set(data);
-                this.loading.set(false);
-            },
-            error: (err) => {
-                console.error('Error al buscar peliculas por fecha:', err);
-                this.error.set(err);
-                this.loading.set(false);
-            }
+      this.movieService
+        .searchPeliculasByPublicationDate(this.publicationDateTerm())
+        .subscribe({
+          next: (data) => {
+            this.movies.set(data);
+            this.loading.set(false);
+          },
+          error: (err) => {
+            console.error('Error al buscar peliculas por fecha:', err);
+            this.error.set(err);
+            this.loading.set(false);
+          },
         });
     } else if (this.searchTerm()) {
       this.movieService.searchPeliculasByName(this.searchTerm()).subscribe({
@@ -56,11 +66,10 @@ export class MovieListComponent implements OnInit {
           console.error('Error al buscar peliculas por nombre:', err);
           this.error.set(err);
           this.loading.set(false);
-        }
+        },
       });
     } else {
-      this.movieService.getAllPeliculas()
-      .subscribe({
+      this.movieService.getAllPeliculas().subscribe({
         next: (data) => {
           this.movies.set(data);
           this.loading.set(false);
@@ -69,7 +78,7 @@ export class MovieListComponent implements OnInit {
           console.error('Error al cargar la lista de peliculas:', err);
           this.error.set(err);
           this.loading.set(false);
-        }
+        },
       });
     }
   }
@@ -78,7 +87,7 @@ export class MovieListComponent implements OnInit {
     const inputElement = event.target as HTMLInputElement;
     this.searchTerm.set(inputElement.value);
     if (this.publicationDateTerm()) {
-        this.publicationDateTerm.set('');
+      this.publicationDateTerm.set('');
     }
   }
 
@@ -92,20 +101,20 @@ export class MovieListComponent implements OnInit {
   }
 
   onPublicationDateInputChange(event: Event): void {
-      const inputElement = event.target as HTMLInputElement;
-      this.publicationDateTerm.set(inputElement.value);
-      if (this.searchTerm()) {
-           this.searchTerm.set('');
-      }
+    const inputElement = event.target as HTMLInputElement;
+    this.publicationDateTerm.set(inputElement.value);
+    if (this.searchTerm()) {
+      this.searchTerm.set('');
+    }
   }
 
   onSearchDateClick(): void {
-      this.loadMovies();
+    this.loadMovies();
   }
 
   clearDateSearch(): void {
-      this.publicationDateTerm.set('');
-      this.loadMovies();
+    this.publicationDateTerm.set('');
+    this.loadMovies();
   }
 
   onEditClick(id: number): void {

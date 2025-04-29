@@ -1,20 +1,31 @@
 // frontend/src/app/features/assignments/components/assignment-form/assignment-form.component.ts
-import { Component, OnInit, inject, signal, WritableSignal } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal,
+  WritableSignal,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { AssignmentService } from '../../services/assignment.service';
 import { MovieService } from '../../../../features/movies/services/movie.service';
-import { RoomService } from '../../../../features/rooms/services/room.service'; 
+import { RoomService } from '../../../../features/rooms/services/room.service';
 
 import { AsignacionPayload } from '../../models/assignments';
 import { Pelicula } from '../../../../features/movies/models/movies';
-import { SalaCine } from '../../../../features/rooms/models/rooms'; 
+import { SalaCine } from '../../../../features/rooms/models/rooms';
 
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-assignment-form', 
+  selector: 'app-assignment-form',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './assignment-form.component.html',
@@ -22,8 +33,8 @@ import { forkJoin } from 'rxjs';
 export class AssignmentFormComponent implements OnInit {
   private fb = inject(FormBuilder);
   private assignmentService = inject(AssignmentService);
-  private movieService = inject(MovieService); 
-  private roomService = inject(RoomService); 
+  private movieService = inject(MovieService);
+  private roomService = inject(RoomService);
 
   assignmentForm: FormGroup;
 
@@ -31,18 +42,17 @@ export class AssignmentFormComponent implements OnInit {
   rooms = signal<SalaCine[]>([]);
 
   loadingLists = signal(true);
-  loadingError = signal<any>(null); 
+  loadingError = signal<any>(null);
   submitting = signal(false);
-  submitError = signal<any>(null); 
-  submitSuccess = signal(false); 
-
+  submitError = signal<any>(null);
+  submitSuccess = signal(false);
 
   constructor() {
     this.assignmentForm = this.fb.group({
-      id_pelicula: [null, Validators.required], 
-      id_sala_cine: [null, Validators.required], 
-      fecha_publicacion: ['', Validators.required], 
-      fecha_fin: ['', Validators.required] 
+      id_pelicula: [null, Validators.required],
+      id_sala_cine: [null, Validators.required],
+      fecha_publicacion: ['', Validators.required],
+      fecha_fin: ['', Validators.required],
     });
   }
 
@@ -51,27 +61,25 @@ export class AssignmentFormComponent implements OnInit {
   }
 
   loadMoviesAndRooms(): void {
-      this.loadingLists.set(true);
-      this.loadingError.set(null);
+    this.loadingLists.set(true);
+    this.loadingError.set(null);
 
-      forkJoin({
-          movies: this.movieService.getAllPeliculas(),
-          rooms: this.roomService.getAllSalasCine()
-      }).subscribe({
-          next: (results) => {
-              this.movies.set(results.movies); 
-              this.rooms.set(results.rooms); 
-              this.loadingLists.set(false); 
-          },
-          error: (err) => {
-              console.error('Error al cargar listas de peliculas/salas:', err);
-              this.loadingError.set(err); 
-              this.loadingLists.set(false); 
-          }
-      });
+    forkJoin({
+      movies: this.movieService.getAllPeliculas(),
+      rooms: this.roomService.getAllSalasCine(),
+    }).subscribe({
+      next: (results) => {
+        this.movies.set(results.movies);
+        this.rooms.set(results.rooms);
+        this.loadingLists.set(false);
+      },
+      error: (err) => {
+        console.error('Error al cargar listas de peliculas/salas:', err);
+        this.loadingError.set(err);
+        this.loadingLists.set(false);
+      },
+    });
   }
-
-
 
   onSubmit(): void {
     if (this.assignmentForm.valid) {
@@ -79,8 +87,7 @@ export class AssignmentFormComponent implements OnInit {
       this.submitError.set(null); // Resetea estado de error
       this.submitSuccess.set(false); // Resetea estado de exito
 
-      const assignmentData: AsignacionPayload = this.assignmentForm.value; 
-
+      const assignmentData: AsignacionPayload = this.assignmentForm.value;
 
       this.assignmentService.createAssignment(assignmentData).subscribe({
         next: (response) => {
@@ -93,7 +100,7 @@ export class AssignmentFormComponent implements OnInit {
           console.error('Error al crear asignacion:', error);
           this.submitting.set(false); // Finaliza estado de envio
           this.submitError.set(error); // Guarda el error
-        }
+        },
       });
     } else {
       this.assignmentForm.markAllAsTouched();

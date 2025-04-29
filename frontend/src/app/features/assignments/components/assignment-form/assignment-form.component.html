@@ -2,92 +2,95 @@
   <h1 class="text-2xl font-bold mb-4">Asignar Película a Sala</h1>
 
   @if (loadingLists()) {
-    <p>Cargando películas y salas...</p>
+  <p>Cargando películas y salas...</p>
   } @else if (loadingError()) {
-    <p class="text-red-500">Error al cargar las listas.</p>
+  <p class="text-red-500">Error al cargar las listas.</p>
+  } @if (!loadingLists() && !loadingError()) {
+  <form
+    [formGroup]="assignmentForm"
+    (submit)="onSubmit()"
+    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+  >
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="id_pelicula"
+      >
+        Película
+      </label>
+      <select
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="id_pelicula"
+        formControlName="id_pelicula"
+      >
+        <option [ngValue]="null" disabled>Selecciona una película</option>
+        @for (movie of movies(); track movie.id_pelicula) {
+        <option [ngValue]="movie.id_pelicula">{{ movie.nombre }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="id_sala_cine"
+      >
+        Sala de Cine
+      </label>
+      <select
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="id_sala_cine"
+        formControlName="id_sala_cine"
+      >
+        <option [ngValue]="null" disabled>Selecciona una sala</option>
+        @for (room of rooms(); track room.id_sala) {
+        <option [ngValue]="room.id_sala">{{ room.nombre }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="fecha_publicacion"
+      >
+        Fecha Publicación
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="fecha_publicacion"
+        type="date"
+        formControlName="fecha_publicacion"
+      />
+    </div>
+
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="fecha_fin">
+        Fecha Fin
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="fecha_fin"
+        type="date"
+        formControlName="fecha_fin"
+      />
+    </div>
+
+    <div class="flex items-center justify-between">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="submit"
+        [disabled]="assignmentForm.invalid || submitting()"
+      >
+        @if (submitting()) { Guardando... } @else { Guardar Asignación }
+      </button>
+    </div>
+  </form>
+  } @if (submitting()) {
+  <p>Creando asignación...</p>
+  } @else if (submitError()) {
+  <p class="text-red-500">Error al crear asignación.</p>
+  } @else if (submitSuccess()) {
+  <p class="text-green-500">Asignación creada con éxito!</p>
   }
-
-  @if (!loadingLists() && !loadingError()) {
-    <form [formGroup]="assignmentForm" (submit)="onSubmit()" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="id_pelicula">
-          Película
-        </label>
-        <select
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="id_pelicula"
-          formControlName="id_pelicula"
-        >
-          <option [ngValue]="null" disabled>Selecciona una película</option>
-          @for (movie of movies(); track movie.id_pelicula) {
-            <option [ngValue]="movie.id_pelicula">{{ movie.nombre }}</option>
-          }
-        </select>
-         </div>
-
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="id_sala_cine">
-          Sala de Cine
-        </label>
-        <select
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="id_sala_cine"
-          formControlName="id_sala_cine"
-        >
-          <option [ngValue]="null" disabled>Selecciona una sala</option>
-           @for (room of rooms(); track room.id_sala) {
-            <option [ngValue]="room.id_sala">{{ room.nombre }}</option>
-          }
-        </select>
-         </div>
-
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="fecha_publicacion">
-          Fecha Publicación
-        </label>
-        <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="fecha_publicacion"
-          type="date"
-          formControlName="fecha_publicacion"
-        >
-         </div>
-
-      <div class="mb-6">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="fecha_fin">
-          Fecha Fin
-        </label>
-         <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="fecha_fin"
-          type="date"
-          formControlName="fecha_fin"
-        >
-         </div>
-
-      <div class="flex items-center justify-between">
-        <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          type="submit"
-          [disabled]="assignmentForm.invalid || submitting()"
-        >
-           @if (submitting()) {
-               Guardando...
-           } @else {
-               Guardar Asignación
-           }
-        </button>
-         </div>
-    </form>
-  }
-
-  @if (submitting()) {
-       <p>Creando asignación...</p>
-   } @else if (submitError()) {
-       <p class="text-red-500">Error al crear asignación.</p>
-   } @else if (submitSuccess()) {
-       <p class="text-green-500">Asignación creada con éxito!</p>
-   }
-
 </div>

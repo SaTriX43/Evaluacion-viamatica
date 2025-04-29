@@ -1,0 +1,384 @@
+{
+	"info": {
+		"_postman_id": "11431c6a-bce5-4b76-b4ab-8290008fdbbb",
+		"name": "viamatica api cine",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41254768"
+	},
+	"item": [
+		{
+			"name": "Get todas las peliculas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/peliculas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"peliculas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Dashboard Indicadores",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/dashboard/indicadores",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"dashboard",
+						"indicadores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get pelicula por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/peliculas/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"peliculas",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Peliculas Buscar por Nombre",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/peliculas/buscarPorNombre?nombre=Origen",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"peliculas",
+						"buscarPorNombre"
+					],
+					"query": [
+						{
+							"key": "nombre",
+							"value": "Origen"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Peliculas Publicadas en Fecha",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/peliculas/publicadasEnFecha?fecha=2025-05-01",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"peliculas",
+						"publicadasEnFecha"
+					],
+					"query": [
+						{
+							"key": "fecha",
+							"value": "2025-05-01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Todas Salas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/salas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"salas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Sala por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/salas/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"salas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Salas Buscar por Nombre",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/salas/buscarPorNombre?nombre=Sala",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"salas",
+						"buscarPorNombre"
+					],
+					"query": [
+						{
+							"key": "nombre",
+							"value": "Sala"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Sala Estado por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/salas/status/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"salas",
+						"status",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Crear Pelicula",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Nueva Pelicula Postman\",\r\n    \"duracion\": 110\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/peliculas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"peliculas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Crear Sala",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Nueva Sala Postman\",\r\n    \"estado\": \"Disponible\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/salas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"salas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Crear Asignacion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_pelicula\": 1,   // Reemplaza con un ID de pelicula existente\r\n    \"id_sala_cine\": 1,  // Reemplaza con un ID de sala existente\r\n    \"fecha_publicacion\": \"2025-06-01\",\r\n    \"fecha_fin\": \"2025-06-15\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/asignaciones",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"asignaciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Actualizar Pelicula",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Nombre Actualizado Postman\",\r\n    \"duracion\": 130\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/peliculas/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"peliculas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Actualizar Sala",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Nombre Sala Actualizado\",\r\n    \"estado\": \"En Mantenimiento\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/salas/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"salas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Eliminar Pelicula Logica",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/peliculas/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"peliculas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

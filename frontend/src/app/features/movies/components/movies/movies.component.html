@@ -1,29 +1,23 @@
 <div class="container mx-auto p-6">
-
   @if (mode() === 'list') {
-      <div class="flex justify-end mb-4">
-         <button
-            (click)="openCreateForm()"
-            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-         >
-            Crear Nueva Película
-         </button>
-      </div>
+  <div class="flex justify-end mb-4">
+    <button
+      (click)="openCreateForm()"
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+    >
+      Crear Nueva Película
+    </button>
+  </div>
+  } @if (mode() === 'list') {
+  <movie-list-component
+    (editMovieEvent)="openEditForm($event)"
+    (deleteMovieEvent)="handleDeleteMovie($event)"
+    #movieList
+  />
+  } @if (mode() === 'create' || mode() === 'edit') {
+  <movie-form-component
+    [movieId]="editingMovieId()"
+    (formClosed)="handleFormClosed()"
+  />
   }
-
-  @if (mode() === 'list') {
-      <movie-list-component
-          (editMovieEvent)="openEditForm($event)"
-          (deleteMovieEvent)="handleDeleteMovie($event)"
-          #movieList
-      />
-  }
-
-  @if (mode() === 'create' || mode() === 'edit') {
-      <movie-form-component
-         [movieId]="editingMovieId()"
-         (formClosed)="handleFormClosed()"
-      />
-  }
-
 </div>

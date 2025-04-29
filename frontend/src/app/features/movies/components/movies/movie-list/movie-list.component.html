@@ -2,95 +2,108 @@
   <h1 class="text-2xl font-bold mb-4">Listado de Películas</h1>
 
   <div class="mb-4 border p-4 rounded shadow">
-      <h2 class="text-lg font-semibold mb-2">Buscar Películas</h2>
-      <div class="flex flex-wrap gap-4">
-          <div class="flex items-center">
-              <input
-                  type="text"
-                  placeholder="Buscar por nombre..."
-                  class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2"
-                  [value]="searchTerm()"
-                  (input)="onSearchInputChange($event)"
-              >
-              <button
-                  (click)="onSearchClick()"
-                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-              >
-                  Buscar
-              </button>
-               @if (searchTerm()) {
-                   <button
-                       (click)="clearSearch()"
-                       class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-                   >
-                       Limpiar
-                   </button>
-               }
-          </div>
-
-           <div class="flex items-center">
-               <label class="block text-gray-700 text-sm font-bold mr-2" for="publicationDate">Fecha:</label>
-               <input
-                   type="date"
-                   id="publicationDate"
-                   class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-shadow mr-2"
-                   [value]="publicationDateTerm()"
-                   (input)="onPublicationDateInputChange($event)"
-               >
-               <button
-                   (click)="onSearchDateClick()"
-                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-               >
-                   Buscar por Fecha
-               </button>
-                @if (publicationDateTerm()) {
-                   <button
-                       (click)="clearDateSearch()"
-                       class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-                   >
-                       Limpiar Fecha
-                   </button>
-                }
-           </div>
+    <h2 class="text-lg font-semibold mb-2">Buscar Películas</h2>
+    <div class="flex flex-wrap gap-4">
+      <div class="flex items-center">
+        <input
+          type="text"
+          placeholder="Buscar por nombre..."
+          class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2"
+          [value]="searchTerm()"
+          (input)="onSearchInputChange($event)"
+        />
+        <button
+          (click)="onSearchClick()"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+        >
+          Buscar
+        </button>
+        @if (searchTerm()) {
+        <button
+          (click)="clearSearch()"
+          class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Limpiar
+        </button>
+        }
       </div>
+
+      <div class="flex items-center">
+        <label
+          class="block text-gray-700 text-sm font-bold mr-2"
+          for="publicationDate"
+          >Fecha:</label
+        >
+        <input
+          type="date"
+          id="publicationDate"
+          class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-shadow mr-2"
+          [value]="publicationDateTerm()"
+          (input)="onPublicationDateInputChange($event)"
+        />
+        <button
+          (click)="onSearchDateClick()"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+        >
+          Buscar por Fecha
+        </button>
+        @if (publicationDateTerm()) {
+        <button
+          (click)="clearDateSearch()"
+          class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Limpiar Fecha
+        </button>
+        }
+      </div>
+    </div>
   </div>
 
-
   @if (loading()) {
-    <p>Cargando películas...</p>
+  <p>Cargando películas...</p>
   } @else if (error()) {
-    <p class="text-red-500">Error al cargar las películas.</p>
+  <p class="text-red-500">Error al cargar las películas.</p>
   } @else if (movies().length === 0) {
-    <p>No hay películas disponibles que coincidan con el filtro.</p>
-  }
-
-  @if (!loading() && !error() && movies().length > 0) {
-    <div class="overflow-x-auto">
-        <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-          <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-            <tr>
-              <th class="py-3 px-6 text-left">ID</th>
-              <th class="py-3 px-6 text-left">Nombre</th>
-              <th class="py-3 px-6 text-left">Duración (min)</th>
-              <th class="py-3 px-6 text-center">Acciones</th>
-            </tr>
-          </thead>
-          <tbody class="text-gray-600 text-sm font-light">
-            @for (pelicula of movies(); track pelicula.id_pelicula) {
-              <tr class="border-b border-gray-200 hover:bg-gray-100">
-                <td class="py-3 px-6 text-left whitespace-nowrap">{{ pelicula.id_pelicula }}</td>
-                <td class="py-3 px-6 text-left">{{ pelicula.nombre }}</td>
-                <td class="py-3 px-6 text-left">{{ pelicula.duracion }}</td>
-                <td class="py-3 px-6 text-center">
-                  <div class="flex item-center justify-center gap-[5px]">
-                      <button (click)="onEditClick(pelicula.id_pelicula)" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded mr-2">Editar</button>
-                      <button (click)="onDeleteClick(pelicula.id_pelicula)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">Eliminar</button>
-                  </div>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-    </div>
+  <p>No hay películas disponibles que coincidan con el filtro.</p>
+  } @if (!loading() && !error() && movies().length > 0) {
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+      <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+        <tr>
+          <th class="py-3 px-6 text-left">ID</th>
+          <th class="py-3 px-6 text-left">Nombre</th>
+          <th class="py-3 px-6 text-left">Duración (min)</th>
+          <th class="py-3 px-6 text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 text-sm font-light">
+        @for (pelicula of movies(); track pelicula.id_pelicula) {
+        <tr class="border-b border-gray-200 hover:bg-gray-100">
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ pelicula.id_pelicula }}
+          </td>
+          <td class="py-3 px-6 text-left">{{ pelicula.nombre }}</td>
+          <td class="py-3 px-6 text-left">{{ pelicula.duracion }}</td>
+          <td class="py-3 px-6 text-center">
+            <div class="flex item-center justify-center gap-[5px]">
+              <button
+                (click)="onEditClick(pelicula.id_pelicula)"
+                class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded mr-2"
+              >
+                Editar
+              </button>
+              <button
+                (click)="onDeleteClick(pelicula.id_pelicula)"
+                class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded"
+              >
+                Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
   }
 </div>
