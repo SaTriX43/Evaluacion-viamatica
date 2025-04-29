@@ -1,9 +1,14 @@
 // backend/routes/pelicula.routes.mjs
 import { Router } from 'express';
-import { getAllPeliculas } from '../controllers/pelicula.controller.mjs'; // Importa la funcion controladora
+import { createPelicula, getAllPeliculas, logicalDeletePelicula, searchPeliculasByName, searchPeliculasByPublicationDate, updatePelicula } from '../controllers/pelicula.controller.mjs'; 
 
 const router = Router();
 
-router.get('/', getAllPeliculas); 
+router.get('/buscarPorNombre', searchPeliculasByName)
+router.get('/publicadasEnFecha', searchPeliculasByPublicationDate);
+router.get('/', getAllPeliculas)
+router.post('/', createPelicula)
+router.put('/:id', updatePelicula)
+router.delete('/:id', logicalDeletePelicula);
 
 export default router;

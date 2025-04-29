@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors'; 
-import peliculaRutas from './routes/pelicula.routes.mjs'
-
+import peliculaRoutes from './routes/pelicula.routes.mjs'
+import salaCineRoutes from './routes/salaCine.routes.mjs';
+import dashboardRoutes from './routes/dashboard.routes.mjs';
+import asignacionRoutes from './routes/asignacion.routes.mjs';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -9,7 +11,10 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/pelicula', peliculaRutas)
+app.use('/api/peliculas', peliculaRoutes)
+app.use('/api/salas', salaCineRoutes)
+app.use('/api/dashboard', dashboardRoutes)
+app.use('/api/asignaciones', asignacionRoutes)
 
 // Middleware para manejar rutas no encontradas (404) - Colócalo al final de todas tus rutas
 app.use((req, res, next) => {
