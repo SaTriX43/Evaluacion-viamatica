@@ -1,9 +1,11 @@
 // frontend/src/app/features/movies/components/movies/movies.component.ts
-import { Component, ChangeDetectionStrategy, inject, signal, ViewChild } from '@angular/core'; // Importa ViewChild
+import { Component, ChangeDetectionStrategy, inject, signal, ViewChild } from '@angular/core';
 import { MovieListComponent } from "../../components/movies/movie-list/movie-list.component";
-import { MovieFormComponent } from "../../components/movies/movie-form/movie-form.component"; 
+import { MovieFormComponent } from "../../components/movies/movie-form/movie-form.component";
 import { CommonModule } from '@angular/common';
-import { MovieService } from '../../services/movie.service'; // Importa el MovieService
+import { MovieService } from '../../services/movie.service';
+
+type MovieScreenMode = 'list' | 'create' | 'edit';
 
 @Component({
   selector: 'app-movies',
@@ -13,19 +15,22 @@ import { MovieService } from '../../services/movie.service'; // Importa el Movie
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MoviesComponent {
-  private movieService = inject(MovieService); 
+  private movieService = inject(MovieService);
+
+  mode = signal<MovieScreenMode>('list');
+
   editingMovieId = signal<number | null>(null);
 
   @ViewChild(MovieListComponent) movieListComponent!: MovieListComponent;
 
-
   openCreateForm(): void {
-    this.editingMovieId.set(null); 
+    this.editingMovieId.set(null);
+    this.mode.set('create');
   }
 
-  
   openEditForm(id: number): void {
-    this.editingMovieId.set(id); 
+    this.editingMovieId.set(id);
+    this.mode.set('edit');
   }
 
   handleDeleteMovie(id: number): void {
@@ -40,14 +45,9 @@ export class MoviesComponent {
     });
   }
 
-
   handleFormClosed(): void {
-    this.editingMovieId.set(null); // Oculta el formulario (establece el ID a null)
-    this.movieListComponent?.loadMovies(); // Llama al metodo publico del componente hijo para recargar la lista
+    this.editingMovieId.set(null);
+    this.mode.set('list');
+    this.movieListComponent?.loadMovies();
   }
 }
-
-
-
-
-

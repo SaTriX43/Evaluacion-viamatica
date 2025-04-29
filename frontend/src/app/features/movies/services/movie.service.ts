@@ -29,4 +29,12 @@ export class MovieService {
   logicalDeletePelicula(id: number): Observable<any> {
     return this.apiService.delete(`/peliculas/${id}`);
   }
+
+  searchPeliculasByName(name: string): Observable<Pelicula[]> {
+    return this.apiService.get<Pelicula[]>(`/peliculas/buscarPorNombre?nombre=${encodeURIComponent(name)}`);
+  }
+
+  searchPeliculasByPublicationDate(date: string): Observable<Pelicula[]> {
+    return this.apiService.get<Pelicula[]>(`/peliculas/publicadasEnFecha?fecha=${encodeURIComponent(date)}`);
+  }
 }
