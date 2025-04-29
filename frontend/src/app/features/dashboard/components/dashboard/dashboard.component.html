@@ -1,1 +1,16 @@
-<h2>hola</h2>
+<div>
+  <h1>Dashboard</h1>
+
+  @if (indicators()) {
+    <div>
+      <p>Total de Películas: {{ indicators()!.totalMovies }}</p>
+      <p>Total de Salas de Cine: {{ indicators()!.totalRooms }}</p>
+      <p>Total de Salas Disponibles: {{ indicators()!.availableRooms }}</p>
+    </div>
+  } @else {
+    <div>
+       Cargando indicadores...
+    </div>
+  }
+
+</div>

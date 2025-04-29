@@ -1,1 +1,5 @@
-export interface Dashboard { }
+export interface DashboardIndicators {
+    totalMovies: number;
+    totalRooms: number;
+    availableRooms: number;
+}
