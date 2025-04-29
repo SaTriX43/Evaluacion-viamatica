@@ -1,1 +1,39 @@
-<p>room-list works!</p>,
+<div>
+  <h1 class="text-2xl font-bold mb-4">Listado de Salas de Cine</h1>
+
+  @if (loading()) {
+    <p>Cargando salas...</p>
+  } @else if (error()) {
+    <p class="text-red-500">Error al cargar las salas.</p>
+  } @else if (salas().length === 0) {
+    <p>No hay salas disponibles.</p>
+  }
+
+  @if (!loading() && !error() && salas().length > 0) {
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+          <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+            <tr>
+              <th class="py-3 px-6 text-left">ID</th>
+              <th class="py-3 px-6 text-left">Nombre</th>
+              <th class="py-3 px-6 text-left">Estado (DB)</th>
+              <th class="py-3 px-6 text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-600 text-sm font-light">
+            @for (sala of salas(); track sala.id_sala) {
+              <tr class="border-b border-gray-200 hover:bg-gray-100">
+                <td class="py-3 px-6 text-left whitespace-nowrap">{{ sala.id_sala }}</td>
+                <td class="py-3 px-6 text-left">{{ sala.nombre }}</td>
+                <td class="py-3 px-6 text-left">{{ sala.estado }}</td> <td class="py-3 px-6 text-center">
+                  <div class="flex item-center justify-center gap-[5px]">
+                      <button (click)="onEditClick(sala.id_sala)" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded mr-2">Editar</button>
+                       </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+    </div>
+  }
+</div>

@@ -1,1 +1,28 @@
-<p>rooms works!</p>,
+<div class="container mx-auto p-6">
+
+  @if (mode() === 'list') {
+      <div class="flex justify-end mb-4">
+         <button
+            (click)="openCreateForm()"
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+         >
+            Crear Nueva Sala
+         </button>
+      </div>
+  }
+
+  @if (mode() === 'list') {
+      <room-list-component
+          (editRoomEvent)="openEditForm($event)"
+          #roomList
+      />
+  }
+
+  @if (mode() === 'create' || mode() === 'edit') {
+      <app-room-form
+         [roomId]="editingRoomId()"
+         (formClosed)="handleFormClosed()"
+      />
+  }
+
+</div>

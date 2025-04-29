@@ -13,6 +13,23 @@ export async function getAllPeliculas() {
   }
 }
 
+// get por id 
+export async function getPeliculaById(id_pelicula) {
+  const query = `
+    SELECT id_pelicula, nombre, duracion
+    FROM pelicula
+    WHERE id_pelicula = $1 AND is_deleted = FALSE; 
+  `; 
+
+  try {
+    const res = await pool.query(query, [id_pelicula]);
+    return res.rows[0];
+  } catch (err) {
+    console.error('Error en pelicula.repository.getPeliculaById:', err);
+    throw err;
+  }
+}
+
 
 // get por nombre 
 export async function searchPeliculasByName(nombre) {

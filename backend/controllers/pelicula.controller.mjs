@@ -22,6 +22,28 @@ export async function getAllPeliculas(req, res) {
   }
 }
 
+// get por id 
+export async function getPeliculaById(req, res) {
+  try {
+    const id_pelicula = parseInt(req.params.id);
+    if (isNaN(id_pelicula)) {
+        return res.status(400).json({ message: 'ID de pelicula invalido' });
+    }
+
+    const pelicula = await peliculaService.getPeliculaById(id_pelicula);
+
+    if (pelicula) {
+      res.status(200).json(pelicula); 
+    } else {
+      res.status(404).json({ message: 'Pelicula no encontrada' }); 
+    }
+
+  } catch (error) {
+    console.error('Error en el controlador getPeliculaById:', error);
+    res.status(500).json({ message: 'Error interno del servidor al obtener pelicula por ID' });
+  }
+}
+
 // get por nombre 
 export async function searchPeliculasByName(req, res) {
   try {

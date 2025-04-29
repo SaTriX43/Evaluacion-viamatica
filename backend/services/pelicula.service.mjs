@@ -12,6 +12,17 @@ export async function getAllPeliculas() {
   }
 }
 
+// get por id  
+export async function getPeliculaById(id_pelicula) {
+  try {
+    const pelicula = await peliculaRepository.getPeliculaById(id_pelicula);
+    return pelicula; 
+  } catch (error) {
+    console.error('Error en pelicula.service.getPeliculaById:', error);
+    throw error;
+  }
+}
+
 
 // get por nombre 
 export async function searchPeliculasByName(nombre) {

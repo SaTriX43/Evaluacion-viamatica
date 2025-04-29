@@ -1,1 +1,41 @@
-<p>movie-list works!</p>,
+<div>
+  <h1 class="text-2xl font-bold mb-4">Listado de Películas</h1>
+
+  @if (loading()) {
+    <p>Cargando películas...</p>
+  } @else if (error()) {
+    <p class="text-red-500">Error al cargar las películas.</p>
+  } @else if (movies().length === 0) {
+    <p>No hay películas disponibles.</p>
+  }
+
+  @if (!loading() && !error() && movies().length > 0) {
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+          <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+            <tr>
+              <th class="py-3 px-6 text-left">ID</th>
+              <th class="py-3 px-6 text-left">Nombre</th>
+              <th class="py-3 px-6 text-left">Duración (min)</th>
+              <th class="py-3 px-6 text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-600 text-sm font-light">
+            @for (pelicula of movies(); track pelicula.id_pelicula) {
+              <tr class="border-b border-gray-200 hover:bg-gray-100">
+                <td class="py-3 px-6 text-left whitespace-nowrap">{{ pelicula.id_pelicula }}</td>
+                <td class="py-3 px-6 text-left">{{ pelicula.nombre }}</td>
+                <td class="py-3 px-6 text-left">{{ pelicula.duracion }}</td>
+                <td class="py-3 px-6 text-center">
+                  <div class="flex item-center justify-center gap-[5px]">
+                      <button (click)="onEditClick(pelicula.id_pelicula)" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded mr-2">Editar</button>
+                      <button (click)="onDeleteClick(pelicula.id_pelicula)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">Eliminar</button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+    </div>
+  }
+</div>
